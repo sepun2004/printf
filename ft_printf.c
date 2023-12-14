@@ -12,51 +12,43 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <string.h>
 //#include "ft_printf.h"
 
-int	ft_put_int(int n)
-{
-	int				nb;
-	unsigned int	i;
-
-	nb = n;
-	i = 1;
-	if (n < 0 && n != -2147483648)
-	{
-		nb = -n;
-		i++;
-	}
-	while (nb > 9)
-	{
-		nb = nb / 10;
-		i++;
-	}
-	ft_putnbr_fd(n, 1);
-	if (n == -2147483648)
-		return (11);
-	return (i);
-}
-
-
-ft_puthexadecimals
-
-char ft_putchar(char argument)
+void    ft_putchar(char argument)
 {
     write(1, &argument, 1);
 }
-char *ft_putstr(char *argument)
+void    ft_putstr(char *argument)
 {
     
     int i = 0;
     int len = strlen(argument);
-
     while (i < len)
     {
-        write(1, &argument[i], 1);
+        ft_putchar(argument[i]);
         i++;
     }
-    
 }
+
+void	ft_putnbr(int n)
+{
+	if (n == -2147483648)
+		ft_putstr("-2147483648");
+	else if (n < 0)
+	{
+		ft_putchar('-');
+		n = n * (-1);
+	}
+	if (n > 9)
+	{
+		ft_putnbr(n / 10);
+		ft_putnbr(n % 10);
+	}
+	if (n <= 9 && n != -2147483648)
+		ft_putchar(n + '0');
+}
+//ft_puthexadecimals
 
 
 char ft_select_type(va_list argument, char c)
@@ -68,7 +60,7 @@ char ft_select_type(va_list argument, char c)
     if (c == 's')
         ft_putstr(va_arg(argument, char *));
     if (c == 'i')
-        ft_put_int(va_arg(argument, int *));
+        ft_putnbr(va_arg(argument, int));
 }
 //ft_print_all();
 
@@ -79,7 +71,7 @@ int ft_printf(char const *str, ...)
     va_list argument;
 
     va_start(argument, str);
-    while (str[i])
+    while (str[i] != '\0')
     {
         if (str[i] == '%')
         {
@@ -87,19 +79,23 @@ int ft_printf(char const *str, ...)
             i++;
         }
         else
-        //ft_print_all(str);
-        //i++;
-        return(0);
+        ft_putchar(str[i]);
+        i++;
     }
     va_end(argument);
+    return(0);
 }
+
 
 int main()
 {
-    //char x = 'c';
-    //char *str = "hola";
-    void *str = "hola";
+    /*char x = 'c';
+    char *str = "hola";
+    int n = 2000000;*/
 
-    //ft_printf("%c\n", x);
-    //ft_printf("%s\n", str);
+    //ft_printf("%i\n", x);
+    /*ft_printf(x);
+    ft_printf(str);
+    ft_printf(n);*/
+    ft_printf("hola");
 }
