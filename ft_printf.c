@@ -49,6 +49,7 @@ void	ft_putnbr(int n)
 		ft_putchar(n + '0');
 }
 //ft_puthexadecimals
+void
 
 
 char ft_select_type(va_list argument, char c)
@@ -60,6 +61,8 @@ char ft_select_type(va_list argument, char c)
     if (c == 's')
         ft_putstr(va_arg(argument, char *));
     if (c == 'i')
+        ft_putnbr(va_arg(argument, int));
+    if (c == 'u')
         ft_putnbr(va_arg(argument, int));
 }
 //ft_print_all();
