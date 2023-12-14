@@ -14,6 +14,32 @@
 #include <unistd.h>
 //#include "ft_printf.h"
 
+int	ft_put_int(int n)
+{
+	int				nb;
+	unsigned int	i;
+
+	nb = n;
+	i = 1;
+	if (n < 0 && n != -2147483648)
+	{
+		nb = -n;
+		i++;
+	}
+	while (nb > 9)
+	{
+		nb = nb / 10;
+		i++;
+	}
+	ft_putnbr_fd(n, 1);
+	if (n == -2147483648)
+		return (11);
+	return (i);
+}
+
+
+ft_puthexadecimals
+
 char ft_putchar(char argument)
 {
     write(1, &argument, 1);
@@ -41,8 +67,8 @@ char ft_select_type(va_list argument, char c)
         ft_putchar(va_arg(argument, char));
     if (c == 's')
         ft_putstr(va_arg(argument, char *));
-    if (c == 'p')
-        ft_puthexadecimal(va_arg(argument, char *));
+    if (c == 'i')
+        ft_put_int(va_arg(argument, int *));
 }
 //ft_print_all();
 
