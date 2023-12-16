@@ -15,20 +15,22 @@
 #include <string.h>
 //#include "ft_printf.h"
 
-void    ft_putchar(char argument)
+int ft_putchar(char argument, int count)
 {
     write(1, &argument, 1);
+    return(count + 1);
 }
-void    ft_putstr(char *argument)
+char ft_putstr(char *argument, int count)
 {
     
     int i = 0;
     int len = strlen(argument);
     while (i < len)
     {
-        ft_putchar(argument[i]);
+        ft_putchar(argument[i], count);
         i++;
     }
+    return(count);
 }
 
 void	ft_putnbr(int n)
@@ -48,22 +50,34 @@ void	ft_putnbr(int n)
 	if (n <= 9 && n != -2147483648)
 		ft_putchar(n + '0');
 }
-//ft_puthexadecimals
-void
-
-
-char ft_select_type(va_list argument, char c)
+void	ft_puthexa(void *n)
 {
-    //int i = 0;
-
+	//if (n == -2147483648)
+	//	ft_putstr("-2147483648");
+	if (n <= 9)
+	{
+		ft_putchar("0x");
+	}
+	//if (n > 9)
+	//{
+	//	ft_putnbr(n / 10);
+	//	ft_putnbr(n % 10);
+	//}
+	//if (n <= 9 && n != -2147483648)
+	//	ft_putchar(n + '0');
+}
+//
+int ft_select_type(va_list argument, char c, size_t count)
+{
     if (c == 'c')
-        ft_putchar(va_arg(argument, char));
+        count = ft_putchar(va_arg(argument, char), count);
     if (c == 's')
-        ft_putstr(va_arg(argument, char *));
+        count = ft_putstr(va_arg(argument, char *), count);
     if (c == 'i')
-        ft_putnbr(va_arg(argument, int));
-    if (c == 'u')
-        ft_putnbr(va_arg(argument, int));
+        count = ft_putnbr(va_arg(argument, int), count);
+    if (c == 'p')
+        count = ft_putpointer(va_arg(argument, void *), count);
+    return(count);
 }
 //ft_print_all();
 
@@ -74,31 +88,30 @@ int ft_printf(char const *str, ...)
     va_list argument;
 
     va_start(argument, str);
-    while (str[i] != '\0')
+    while (str != '\0')
     {
-        if (str[i] == '%')
+        if (str == '%')
         {
-            ft_select_type(argument, str[i +1]);
+            i = ft_select_type(argument, str[i +1], i);
             i++;
         }
         else
-        ft_putchar(str[i]);
+            i = ft_putchar(str[i], i);
         i++;
     }
-    va_end(argument);
-    return(0);
+    return (va_end(argument), i);
 }
 
 
 int main()
 {
-    /*char x = 'c';
-    char *str = "hola";
-    int n = 2000000;*/
-
-    //ft_printf("%i\n", x);
-    /*ft_printf(x);
-    ft_printf(str);
-    ft_printf(n);*/
-    ft_printf("hola");
+    char *s = NULL;
+    unsigned long i = (unsigned long)s;
+    
+    printf("%p\n", (void *)s);
+    printf("%lx", i);
+    
+    //0x559ca042b004
+    //55906db6d004
+    return 0;
 }
