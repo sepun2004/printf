@@ -51,29 +51,24 @@ int	ft_putnbr(int n, int count)
 	return (count);
 }
 
-int	ft_puthex(unsigned long n, int count, int mode)
+int	ft_puthex(unsigned long n, int count,char c)
 {
-	char	*base;
-	char	str[25];
-	int		i;
 
-	i = 0;
-	if (mode == 0)
-		base = "0123456789abcdef";
-	else
-		base = "0123456789ABCDEF";
-	if (n == 0)
-		count = pf_putchar('0', count);
+	if ( n >= 0 && n <= 9)
+	{
+		ft_putchar(n, count);
+	}
+	else if (n > 9 && n < 16)
+	{
+		if (c == 'x')
+			count = ft_putchar(n - 10 + 'a', count);
+		else if(c == 'X')
+			count = ft_putchar(n - 10 + 'A', count);
+	}
 	else
 	{
-		while (n != 0)
-		{
-			str[i++] = base[n % 16];
-			n /= 16;
-		}
-		i--;
-		while (i >= 0 && count != -1)
-			count = pf_putchar(str[i--], count);
+		count = ft_puthex(n / 16, count, c);
+		count = ft_puthex(n % 16, count, c);
 	}
 	return (count);
 }
@@ -89,11 +84,9 @@ int ft_select_type(va_list argument, char c, size_t count)
     if (c == 'i'  || c == 'd')
         count = ft_putnbr(va_arg(argument, int), count);
 	if (c == 'u')
-		count = ft_putnbr(va_arg(args, unsigned int), count);
-	if (c == 'x')
-		count = ft_puthex(va_arg(args, unsigned int), count, 0);
-	if (c == 'X')
-		count = ft_puthex(va_arg(args, unsigned int), count, 1);
+		count = ft_putnbr(va_arg(argument, unsigned int), count);
+	if (c == 'x' || c == 'X')
+		count = ft_puthex(va_arg(argument, unsigned int), count, c);
 	if (c == '%')
         count = ft_putchar('%', count);
     /*
@@ -129,7 +122,7 @@ int	ft_printf(char const *str, ...)
 
 int main()
 {
-    int c = ----123;
+    int c = -123;
 
     ft_printf("%i", c);
     return 0;
