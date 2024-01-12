@@ -16,7 +16,11 @@ GCC = gcc -Wall -Werror -Wextra
 
 RM = rm -rf
 
-SRC = 
+SRC = ft_printf_hex.c/
+	ft_printf_pointer.c/
+	ft_printf_put_nbr.c/
+	ft_printf_str_char.c/
+	ft_printf.c/
 
 OBJ = $(SRC:.c=.o)
 
