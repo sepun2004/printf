@@ -11,24 +11,29 @@
 /* ************************************************************************** */
 #include "ft_printf.h"
 
-int ft_print_hexamodificado(unsigned long n, int count)
+int	ft_print_hexamodificado(unsigned long long n)
 {
-	if ( n >= 0 && n <= 9)
-		ft_putchar(n, count);
+	int	count;
+
+	count = 0;
+	if (n <= 9)
+		count += ft_putchar(n + '0');
 	else if (n > 9 && n < 16)
-	{
-		count = ft_putchar(n - 10 + 'a', count);
-	}
+		count += ft_putchar(n - 10 + 'a');
 	else
 	{
-		count = ft_putpointer(n / 16, count);
-		count = ft_putpointer(n % 16, count);
+		count += ft_print_hexamodificado(n / 16);
+		count += ft_print_hexamodificado(n % 16);
 	}
 	return (count);
 }
 
-int ft_putpointer(unsigned long n, int count)
+int	ft_putpointer(unsigned long long n)
 {
-	count = ft_putstr("0x");
-	count = ft_print_hexamodificado(n, count);
+	int	count;
+
+	count = 0;
+	count += ft_putstr("0x");
+	count += ft_print_hexamodificado(n);
+	return (count);
 }

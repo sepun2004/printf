@@ -11,20 +11,29 @@
 /* ************************************************************************** */
 #include "ft_printf.h"
 
-int	ft_putnbr(int n, int count)
+int	ft_putnbr(int n)
 {
-	if (n < 0)
+	int	count;
+
+	count = 0;
+	if (n == -2147483648)
 	{
-	    write(1, "-", 1);
-		n *= -1;
+		ft_putchar('-');
+		ft_putstr("2147483648");
+		return (11);
+	}
+	else if (n < 0)
+	{
+		write(1, "-", 1);
+		n = -n;
 		count++;
 	}
 	if (n > 9)
 	{
-		count = ft_putnbr(n / 10, count);
-		count = ft_putchar(n % 10 + '0', count);
+		count += ft_putnbr(n / 10);
+		count += ft_putchar((n % 10) + '0');
 	}
 	else
-		count = ft_putchar(n + '0', count);
+		count += ft_putchar(n + '0');
 	return (count);
 }

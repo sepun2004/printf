@@ -9,48 +9,20 @@
 /*   Updated: 2023/12/08 15:58:01 by sepun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "ft_printf.h"
 
-int	ft_select_type(va_list argument, char c)
+int	ft_putnbr_unsinged(unsigned int n)
 {
 	int	count;
 
 	count = 0;
-	if (c == 'c')
-		count += ft_putchar(va_arg(argument, int));
-	else if (c == 's')
-		count += ft_putstr(va_arg(argument, char *));
-	else if (c == 'i' || c == 'd')
-		count += ft_putnbr(va_arg(argument, int));
-	else if (c == 'u')
-		count += ft_putnbr_unsinged(va_arg(argument, unsigned int));
-	else if (c == 'x' || c == 'X')
-		count += ft_puthex(va_arg(argument, unsigned int), c);
-	else if (c == '%')
-		count += ft_putchar('%');
-	else if (c == 'p')
-		count += ft_putpointer(va_arg(argument, long int));
-	return (count);
-}
-
-int	ft_printf(char const *str, ...)
-{
-	int		count;
-	va_list	args;
-
-	count = 0;
-	va_start(args, str);
-	while (*str != '\0')
+	if(n >= 10)
 	{
-		if (*str == '%')
-		{
-			str++;
-			count += ft_select_type(args, *str);
-		}
-		else
-			count += ft_putchar(*str);
-		str++;
+		count += ft_putnbr_unsinged(n / 10);
+		count += ft_putnbr_unsinged(n % 10);
 	}
-	va_end(args);
+	else
+		count += ft_putchar(n + '0');
 	return (count);
 }

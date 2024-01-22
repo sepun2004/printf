@@ -9,24 +9,27 @@
 /*   Updated: 2023/12/08 16:42:25 by sepun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "ft_printf.h"
 
-int	ft_puthex(unsigned long n, int count,char c)
+int	ft_puthex(unsigned long n, char c)
 {
+	int	count;
 
-	if ( n >= 0 && n <= 9)
-		ft_putchar(n, count);
+	count = 0;
+	if (n <= 9)
+		count += ft_putchar(n);
 	else if (n > 9 && n < 16)
 	{
 		if (c == 'x')
-			count = ft_putchar(n - 10 + 'a', count);
-		else if(c == 'X')
-			count = ft_putchar(n - 10 + 'A', count);
+			count += ft_putchar(n - 10 + 'a');
+		else if (c == 'X')
+			count += ft_putchar(n - 10 + 'A');
 	}
 	else
 	{
-		count = ft_puthex(n / 16, count, c);
-		count = ft_puthex(n % 16, count, c);
+		count += ft_puthex(n / 16, c);
+		count += ft_puthex(n % 16, c);
 	}
 	return (count);
 }

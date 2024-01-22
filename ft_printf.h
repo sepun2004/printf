@@ -15,14 +15,22 @@
 
 #include <stdarg.h>
 #include <unistd.h>
+#include <string.h>
 
 //ft_print_pointer
-int ft_print_hexamodificado(unsigned long n, int count);
-int ft_putpointer(unsigned long n, int count);
+int ft_print_hexamodificado(unsigned long long n);
+int ft_putpointer(unsigned long long n);
 //ft_printf_hex
-int	ft_puthex(unsigned long n, int count,char c);
+int	ft_puthex(unsigned long n, char c);
 //ft_printf_put_nbr
-int	ft_putnbr(int n, int count);
+int	ft_putnbr(int n);
 //ft_printf_str_char
-int ft_putchar(char argument, int count)
+int ft_putchar(char argument);
+int ft_putstr(char *argument);
+size_t	ft_strlen(const char *str);
+//ft_printf
+int	ft_printf(char const *str, ...);
+int	ft_select_type(va_list argument, char c);
+//ft_putnbr_unsinged
+int	ft_putnbr_unsinged(unsigned int n);
 #endif
