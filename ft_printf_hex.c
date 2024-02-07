@@ -18,8 +18,8 @@ int	ft_puthex(unsigned long n, char c)
 
 	count = 0;
 	if (n <= 9)
-		count += ft_putchar(n);
-	else if (n > 9 && n < 16)
+		count += ft_putnbr(n);
+	else if (n >= 10 && n < 16)
 	{
 		if (c == 'x')
 			count += ft_putchar(n - 10 + 'a');
